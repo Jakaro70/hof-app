@@ -32,12 +32,16 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<'events' | 'map'>('events');
   const [activeSport, setActiveSport] = useState('All');
   const [hasEvents, setHasEvents] = useState(true);
+  const [search, setSearch] = useState('');
 
-  const filteredEvents = activeSport === 'All'
-    ? EVENTS
-    : EVENTS.filter(e => e.sport === activeSport);
+  const q = search.trim().toLowerCase();
+  const filteredEvents = EVENTS.filter(e => {
+    const bySport = activeSport === 'All' || e.sport === activeSport;
+    const byText = !q || e.name.toLowerCase().includes(q) || e.sport.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q);
+    return bySport && byText;
+  });
 
-  const showEmpty = !hasEvents || (activeTab === 'events' && filteredEvents.length === 0);
+  const showEmpty = !hasEvents || (activeTab === 'events' && !q && filteredEvents.length === 0);
 
   return (
     <div
@@ -46,14 +50,21 @@ export default function HomePage() {
     >
       <StatusBar />
 
-      {/* Search bar */}
-      <div onClick={() => navigate('/search-results')} style={{ position: 'absolute', top: 74, left: 31, width: 316, height: 40, background: '#eff1ee', borderRadius: 10, overflow: 'hidden', cursor: 'pointer' }}>
-        <div style={{ position: 'absolute', left: 20, top: 0, width: 276, height: 40, display: 'flex', alignItems: 'center', gap: 4, padding: 4 }}>
-          <span style={{ flex: 1, fontSize: 16, color: '#3f4945', whiteSpace: 'nowrap', letterSpacing: 0.5 }}>Search events or sports</span>
-          <div style={{ width: 48, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 24, height: 24 }} />
-          </div>
-        </div>
+      {/* Search bar — real input; tap to type and filter in place */}
+      <div style={{ position: 'absolute', top: 74, left: 31, width: 316, height: 40, background: '#eff1ee', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px' }}>
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search events or sports"
+          style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 16, color: '#191c1b', letterSpacing: 0.3, minWidth: 0 }}
+        />
+        {search ? (
+          <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#6f7975" strokeWidth="1.5" strokeLinecap="round" /></svg>
+          </button>
+        ) : (
+          <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 22, height: 22, flexShrink: 0 }} />
+        )}
       </div>
       {/* Filter icon — 8px gap from search bar (31+316+8=355px), vertically centered with search bar (74+(40-24)/2=82px) */}
       <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 84, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
@@ -170,17 +181,29 @@ export default function HomePage() {
               <span style={{ fontSize: 18, color: '#006b56' }}>›</span>
             </div>
 
-            {/* Going section */}
-            <p style={{ margin: '4px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Going</p>
-            {filteredEvents.slice(0, 1).map(event => (
-              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-            ))}
+            {q ? (
+              /* Search results — flat list */
+              <>
+                <p style={{ margin: '4px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>{filteredEvents.length} result{filteredEvents.length === 1 ? '' : 's'}</p>
+                {filteredEvents.map(event => (
+                  <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+                ))}
+              </>
+            ) : (
+              <>
+                {/* Going section */}
+                <p style={{ margin: '4px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Going</p>
+                {filteredEvents.slice(0, 1).map(event => (
+                  <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+                ))}
 
-            {/* Other events section */}
-            <p style={{ margin: '16px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Other events in Munich</p>
-            {filteredEvents.slice(1).map(event => (
-              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
-            ))}
+                {/* Other events section */}
+                <p style={{ margin: '16px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Other events in Munich</p>
+                {filteredEvents.slice(1).map(event => (
+                  <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+                ))}
+              </>
+            )}
           </div>
         )}
       </div>
