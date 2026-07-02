@@ -76,13 +76,13 @@ export default function MapPage() {
         <div style={{ position: 'absolute', left: 20, top: 0, width: 276, height: 40, display: 'flex', alignItems: 'center', gap: 4, padding: 4 }}>
           <span style={{ flex: 1, fontSize: 16, color: '#3f4945', whiteSpace: 'nowrap', letterSpacing: 0.5 }}>Search events or sports</span>
           <div style={{ width: 48, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 24, height: 24 }} />
+            <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 18, height: 18 }} />
           </div>
         </div>
       </div>
 
       {/* Filter icon */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 84, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 85, right: 20, width: 17, height: 17, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 

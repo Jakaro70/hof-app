@@ -53,14 +53,14 @@ export default function SearchResultsPage() {
             </svg>
           </button>
         ) : (
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
             <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM18 18l-4-4" stroke="#3f4944" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         )}
       </div>
 
       {/* Filter icon — smaller, fully inside the screen */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 48, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 49, right: 20, width: 17, height: 17, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 

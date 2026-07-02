@@ -65,11 +65,11 @@ export default function HomePage() {
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#6f7975" strokeWidth="1.5" strokeLinecap="round" /></svg>
           </button>
         ) : (
-          <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 22, height: 22, flexShrink: 0 }} />
+          <img src="/assets/0b96acfaa973753040085e149a1e06b213e6cfef.svg" alt="search" style={{ width: 18, height: 18, flexShrink: 0 }} />
         )}
       </div>
       {/* Filter icon — 8px gap from search bar (31+316+8=355px), vertically centered with search bar (74+(40-24)/2=82px) */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 84, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 85, right: 20, width: 17, height: 17, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 
