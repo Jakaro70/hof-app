@@ -82,7 +82,7 @@ export default function MapPage() {
       </div>
 
       {/* Filter icon */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 82, left: 355, width: 24, height: 24, cursor: 'pointer' }}>
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 84, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 

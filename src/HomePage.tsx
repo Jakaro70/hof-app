@@ -1,46 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from './BottomNav';
+import EventCard from './EventCard';
 import { EVENTS } from './eventsData';
 
 const SPORTS = ['All', 'Football', 'Basketball', 'Tennis', 'Baseball', 'Hockey', 'Soccer'];
-
-const AVATAR_COLORS = ['#007860', '#b45309', '#1d4ed8', '#15803d'];
-
-function AvatarStack({ count }: { count: number }) {
-  const shown = Math.min(count, 4);
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-      <div style={{ display: 'flex' }}>
-        {Array.from({ length: shown }).map((_, i) => (
-          <div key={i} style={{ width: 20, height: 20, borderRadius: '50%', background: AVATAR_COLORS[i % AVATAR_COLORS.length], border: '1.5px solid white', marginLeft: i === 0 ? 0 : -6, zIndex: shown - i, position: 'relative' }} />
-        ))}
-      </div>
-      <span style={{ fontSize: 12, color: '#3f4944' }}>{count} people are going</span>
-    </div>
-  );
-}
-
-function EventHorizontalCard({ event, onClick }: { event: { id: number; name: string; date: string; image: string; people: number; rating: number }; onClick: () => void }) {
-  return (
-    <div onClick={onClick} style={{ display: 'flex', background: '#f8faf7', border: '1px solid #bfc9c3', borderRadius: 12, overflow: 'hidden', marginBottom: 8, cursor: 'pointer', height: 112 }}>
-      <div style={{ flex: 1, padding: 16, display: 'flex', gap: 16, alignItems: 'center' }}>
-        <div style={{ position: 'relative', width: 56, height: 56, flexShrink: 0 }}>
-          <img src="/assets/98725e85c99b521c41a52014073757399ba95a74.svg" alt="" style={{ width: '100%', height: '100%' }} />
-          <span style={{ position: 'absolute', top: '55%', left: '50%', transform: 'translate(-50%,-50%)', fontSize: 14, fontWeight: 500, color: '#191c1b' }}>{event.rating}</span>
-        </div>
-        <div style={{ flex: 1 }}>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#191c1b', lineHeight: '20px' }}>{event.name}</p>
-          <p style={{ margin: '2px 0 8px', fontSize: 12, color: '#3f4944', lineHeight: '16px' }}>{event.date}</p>
-          <AvatarStack count={event.people} />
-        </div>
-      </div>
-      <div style={{ width: 80, flexShrink: 0, borderLeft: '1px solid #bfc9c3' }}>
-        <img src={event.image} alt={event.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </div>
-    </div>
-  );
-}
 
 function StatusBar() {
   return (
@@ -92,7 +56,7 @@ export default function HomePage() {
         </div>
       </div>
       {/* Filter icon — 8px gap from search bar (31+316+8=355px), vertically centered with search bar (74+(40-24)/2=82px) */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 82, left: 355, width: 24, height: 24, cursor: 'pointer' }}>
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 84, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 
@@ -209,13 +173,13 @@ export default function HomePage() {
             {/* Going section */}
             <p style={{ margin: '4px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Going</p>
             {filteredEvents.slice(0, 1).map(event => (
-              <EventHorizontalCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
             ))}
 
             {/* Other events section */}
             <p style={{ margin: '16px 0 10px', fontSize: 16, fontWeight: 600, color: '#000', letterSpacing: -0.32 }}>Other events in Munich</p>
             {filteredEvents.slice(1).map(event => (
-              <EventHorizontalCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
+              <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
             ))}
           </div>
         )}

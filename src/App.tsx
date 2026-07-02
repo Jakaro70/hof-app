@@ -17,6 +17,7 @@ import ChatConversationPage from './ChatConversationPage';
 import FavoritesPage from './FavoritesPage';
 import FilterPage from './FilterPage';
 import DiscoverPage from './DiscoverPage';
+import PaymentPage from './PaymentPage';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
+        <Route path="/payment/:id" element={<PaymentPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

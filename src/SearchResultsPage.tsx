@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from './BottomNav';
+import EventCard from './EventCard';
 import { EVENTS } from './eventsData';
 
 function StatusBar() {
@@ -22,29 +23,6 @@ function StatusBar() {
   );
 }
 
-const AVATAR_COLORS = ['#007860', '#b45309', '#1d4ed8', '#15803d'];
-
-function AvatarStack({ count }: { count: number }) {
-  const shown = Math.min(count, 4);
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-      <div style={{ display: 'flex' }}>
-        {Array.from({ length: shown }).map((_, i) => (
-          <div key={i} style={{
-            width: 20, height: 20, borderRadius: '50%',
-            background: AVATAR_COLORS[i % AVATAR_COLORS.length],
-            border: '1.5px solid white',
-            marginLeft: i === 0 ? 0 : -6,
-            zIndex: shown - i,
-            position: 'relative',
-          }} />
-        ))}
-      </div>
-      <span style={{ fontSize: 12, color: '#3f4944' }}>{count} people are going</span>
-    </div>
-  );
-}
-
 export default function SearchResultsPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'events' | 'map'>('events');
@@ -59,11 +37,8 @@ export default function SearchResultsPage() {
     <div className="w-[390px] bg-white relative" style={{ height: 880, overflow: 'hidden', fontFamily: "'Roboto', sans-serif" }}>
       <StatusBar />
 
-      {/* Search bar — typeable */}
+      {/* Search bar — typeable, search icon on the right edge */}
       <div style={{ position: 'absolute', top: 38, left: 31, width: 316, height: 40, background: '#f0f4f1', borderRadius: 100, display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px' }}>
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM18 18l-4-4" stroke="#3f4944" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
         <input
           autoFocus
           value={query}
@@ -71,17 +46,21 @@ export default function SearchResultsPage() {
           placeholder="Search for events"
           style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 14, color: '#191c1b' }}
         />
-        {query && (
+        {query ? (
           <button onClick={() => setQuery('')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M4 4l8 8M12 4l-8 8" stroke="#6f7975" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM18 18l-4-4" stroke="#3f4944" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         )}
       </div>
 
-      {/* Filter icon */}
-      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 82, left: 355, width: 24, height: 24, cursor: 'pointer' }}>
+      {/* Filter icon — smaller, fully inside the screen */}
+      <div onClick={() => navigate('/filter')} style={{ position: 'absolute', top: 48, right: 20, width: 20, height: 20, cursor: 'pointer' }}>
         <img src="/assets/00cfa13b3feb8f028561d46219d843db1e683196.svg" alt="filter" style={{ width: '100%', height: '100%' }} />
       </div>
 
@@ -91,7 +70,7 @@ export default function SearchResultsPage() {
           {(['events', 'map'] as const).map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => { if (tab === 'map') navigate('/map'); else setActiveTab('events'); }}
               style={{
                 flex: 1, background: 'none', border: 'none', cursor: 'pointer',
                 display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '8px 0 0',
@@ -116,42 +95,12 @@ export default function SearchResultsPage() {
       </div>
 
       {/* Event cards */}
-      <div style={{ position: 'absolute', top: 170, left: 20, right: 20, bottom: 89, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div style={{ position: 'absolute', top: 170, left: 20, right: 20, bottom: 89, overflowY: 'auto' }}>
         {results.length === 0 && (
           <p style={{ margin: '32px 0 0', textAlign: 'center', fontSize: 14, color: '#6f7975' }}>No events found for “{query}”.</p>
         )}
         {results.map(event => (
-          <div
-            key={event.id}
-            onClick={() => navigate(`/event/${event.id}`)}
-            style={{
-              width: '100%', height: 112, display: 'flex', flexShrink: 0,
-              background: '#f8faf7', border: '1px solid #bfc9c3', borderRadius: 12,
-              overflow: 'hidden', cursor: 'pointer',
-            }}
-          >
-            {/* Star badge */}
-            <div style={{ width: 88, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 8px' }}>
-              <div style={{ position: 'relative', width: 52, height: 52 }}>
-                <img src="/assets/98725e85c99b521c41a52014073757399ba95a74.svg" alt="" style={{ width: '100%', height: '100%' }} />
-                <span style={{ position: 'absolute', top: '55%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 14, fontWeight: 500, color: '#191c1b' }}>{event.rating}</span>
-              </div>
-            </div>
-
-            {/* Center content */}
-            <div style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden' }}>
-              <div>
-                <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#191c1b', lineHeight: '20px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{event.name}</p>
-                <p style={{ margin: '2px 0 0', fontSize: 12, color: '#3f4944', lineHeight: '16px' }}>{event.date}</p>
-              </div>
-              <AvatarStack count={event.people} />
-            </div>
-
-            {/* Thumbnail */}
-            <div style={{ width: 80, flexShrink: 0, borderLeft: '1px solid #bfc9c3' }}>
-              <img src={event.image} alt={event.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-          </div>
+          <EventCard key={event.id} event={event} onClick={() => navigate(`/event/${event.id}`)} />
         ))}
       </div>
 
