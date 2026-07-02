@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from './BottomNav';
 import EventCard from './EventCard';
@@ -33,6 +33,7 @@ export default function HomePage() {
   const [activeSport, setActiveSport] = useState('All');
   const [hasEvents, setHasEvents] = useState(true);
   const [search, setSearch] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const q = search.trim().toLowerCase();
   const filteredEvents = EVENTS.filter(e => {
@@ -50,9 +51,10 @@ export default function HomePage() {
     >
       <StatusBar />
 
-      {/* Search bar — real input; tap to type and filter in place */}
-      <div style={{ position: 'absolute', top: 74, left: 31, width: 316, height: 40, background: '#eff1ee', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px' }}>
+      {/* Search bar — real input; tapping anywhere in the pill focuses it */}
+      <div onClick={() => searchRef.current?.focus()} style={{ position: 'absolute', top: 74, left: 31, width: 316, height: 40, background: '#eff1ee', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px', cursor: 'text' }}>
         <input
+          ref={searchRef}
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search events or sports"
