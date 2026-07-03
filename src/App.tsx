@@ -18,6 +18,7 @@ import FavoritesPage from './FavoritesPage';
 import FilterPage from './FilterPage';
 import DiscoverPage from './DiscoverPage';
 import PaymentPage from './PaymentPage';
+import MyProfilePage from './MyProfilePage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/payment/:id" element={<PaymentPage />} />
+        <Route path="/profile" element={<MyProfilePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

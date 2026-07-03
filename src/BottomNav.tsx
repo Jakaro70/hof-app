@@ -6,7 +6,7 @@ const NAV: { icon: string; label: Tab; route: string }[] = [
   { icon: '/assets/aa016a63e5440d3d8146097bae15fd18815e4c12.svg', label: 'Explore', route: '/home' },
   { icon: 'heart', label: 'Favorite', route: '/favorites' },
   { icon: '/assets/bb94a0a92a909847e2cac397cb680ab2707ecae5.svg', label: 'Chats', route: '/chats' },
-  { icon: '/assets/5ee7039ca95a81bf379a4743147d79d5798ecde0.svg', label: 'Profile', route: '/host/2' },
+  { icon: '/assets/5ee7039ca95a81bf379a4743147d79d5798ecde0.svg', label: 'Profile', route: '/profile' },
 ];
 
 // Heart icon for Favorite — clearly distinct from the Chats speech bubble.
