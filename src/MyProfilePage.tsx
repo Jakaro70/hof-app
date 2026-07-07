@@ -56,7 +56,7 @@ export default function MyProfilePage() {
       <StatusBar />
 
       {/* Settings menu (own profile — no back button) */}
-      <button style={{ position: 'absolute', top: 64, right: 33, zIndex: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 20, height: 20 }}>
+      <button onClick={() => navigate('/settings')} style={{ position: 'absolute', top: 64, right: 33, zIndex: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 20, height: 20 }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="#191c1b">
           <circle cx="10" cy="4" r="1.6" />
           <circle cx="10" cy="10" r="1.6" />

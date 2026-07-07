@@ -51,6 +51,15 @@ export default function HomePage() {
     >
       <StatusBar />
 
+      {/* Notification bell */}
+      <button onClick={() => navigate('/notifications')} style={{ position: 'absolute', top: 40, right: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 22, height: 22 }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#191c1b" strokeWidth="1.6">
+          <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13.73 21a2 2 0 01-3.46 0" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span style={{ position: 'absolute', top: -1, right: -1, width: 8, height: 8, borderRadius: '50%', background: '#dc2626', border: '1.5px solid white' }} />
+      </button>
+
       {/* Search bar — real input; tapping anywhere in the pill focuses it */}
       <div onClick={() => searchRef.current?.focus()} style={{ position: 'absolute', top: 74, left: 31, width: 316, height: 40, background: '#eff1ee', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px', cursor: 'text' }}>
         <input

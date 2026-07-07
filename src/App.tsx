@@ -19,6 +19,8 @@ import FilterPage from './FilterPage';
 import DiscoverPage from './DiscoverPage';
 import PaymentPage from './PaymentPage';
 import MyProfilePage from './MyProfilePage';
+import SettingsPage from './SettingsPage';
+import NotificationsPage from './NotificationsPage';
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/payment/:id" element={<PaymentPage />} />
         <Route path="/profile" element={<MyProfilePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
