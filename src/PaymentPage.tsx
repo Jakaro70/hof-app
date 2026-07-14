@@ -45,11 +45,20 @@ export default function PaymentPage() {
     setTimeout(() => setPhase('success'), 1600);
   }
 
-  function finish() {
+  function markJoined() {
     const set = new Set(loadJSON<number[]>(JOINED_KEY, []));
     set.add(event.id);
     saveJSON(JOINED_KEY, [...set]);
+  }
+
+  function finish() {
+    markJoined();
     navigate(`/event/${event.id}`);
+  }
+
+  function backToHome() {
+    markJoined();
+    navigate('/home');
   }
 
   return (
@@ -64,6 +73,7 @@ export default function PaymentPage() {
           <p style={{ margin: 0, fontSize: 22, fontWeight: 700, color: '#191c1b' }}>Payment successful!</p>
           <p style={{ margin: '10px 0 0', fontSize: 14, color: '#6f7975', lineHeight: '20px' }}>You’re going to <b style={{ color: '#191c1b' }}>{event.name}</b>. See you at {event.venue}!</p>
           <button onClick={finish} style={{ marginTop: 32, width: '100%', height: 48, background: '#006b56', border: 'none', borderRadius: 100, color: 'white', fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>View event</button>
+          <button onClick={backToHome} style={{ marginTop: 16, background: 'none', border: 'none', color: '#006b56', fontSize: 14, fontWeight: 600, cursor: 'pointer', padding: 8 }}>Back to homepage</button>
         </div>
       ) : phase === 'processing' ? (
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
